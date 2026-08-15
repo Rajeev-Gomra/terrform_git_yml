@@ -1,0 +1,49 @@
+name: work-flow
+
+on:
+    pull_request:
+        branches:
+            - main
+    push:
+        branches:
+            - main
+
+permissions:
+    id-token: write
+    contents: read
+
+defaults:
+    run:
+        working-directory: ./enviornments/dev
+
+jobs:
+    workflow-practice:
+        runs-on: ubuntu-latest
+        env:
+            ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+            ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+            ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID}}
+            ARM_USES_OIDC: true
+        
+        steps:
+            - name: checkput code
+              uses: actions/checkout@v2
+            
+            - name: Azure Login
+              uses: azure/login@v2
+              with:
+                client-id: ${{ env.ARM_CLIENT_ID}}
+                tenant-id: ${{ env.ARM_TENANT_ID}}
+                subscription-id: ${{ env.ARM_SUBSCRIPTION_ID}}
+
+            - name: Terraform setup
+              uses: hashicorp/setup-terraform@v2
+
+            - name: Terraform init
+              run: terraform init
+
+            - name: terraform validate
+              run: terraform validate
+
+            - name: terraform plan
+              run: terraform plan
