@@ -3,17 +3,17 @@ module "resource_group" {
   rgs    = var.rgs
 }
 
-module "storage_account" {
-  depends_on  = [module.resource_group]
-  source      = "../../modules/storage_account"
-  storage_acc = var.storage_acc
-}
+# module "storage_account" {
+#   depends_on  = [module.resource_group]
+#   source      = "../../modules/storage_account"
+#   storage_acc = var.storage_acc
+# }
 
-module "container" {
-  depends_on = [module.storage_account]
-  source     = "../../modules/container"
-  container  = var.container
-}
+# module "container" {
+#   depends_on = [module.storage_account]
+#   source     = "../../modules/container"
+#   container  = var.container
+# }
 
 module "virtual_network" {
   depends_on = [module.resource_group]
