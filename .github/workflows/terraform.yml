@@ -30,8 +30,8 @@ jobs:
             - name: checkout code
               uses: actions/checkout@v2
             
-            - name: Azure Login
-              uses: azure/login@v3
+            # - name: Azure Login
+            #   uses: azure/login@v3
             #   with:
             #     client-id: "565d9381-0741-4b66-8786-f0d235b16260"
             #     tenant-id: "9f586574-489a-4616-9a09-be6ef4a540ea"
